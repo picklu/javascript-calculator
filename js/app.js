@@ -128,15 +128,11 @@ class Calculator extends React.Component {
   }
 }
 
-class App extends React.Component {
-  render() {
-    return (
-      <React.Fragment>
-        <Calculator />
-        <Footer />
-      </React.Fragment>
-    );
-  }
-}
+const App = () => (
+  <React.Fragment>
+    <Calculator />
+    <Footer />
+  </React.Fragment>
+);
 
 ReactDOM.render(<App />, document.getElementById('app'));
