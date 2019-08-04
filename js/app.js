@@ -8,11 +8,11 @@
  *
  ***********************************************************/
 const Footer = () => (
-  <div class='container'>
-    <div class='footer'>
-      <p>
-        Designed and Coded by <span class='developer'>Subrata Sarker</span>
-      </p>
+  <div className='container'>
+    <div className='footer'>
+      <small>
+        Designed and Coded by <span className='developer'>Subrata Sarker</span>
+      </small>
     </div>
   </div>
 );
