@@ -17,7 +17,22 @@ const Footer = () => (
   </div>
 );
 
+const Display = props => (
+  <div className='calculator-display'>
+    <div id='display' className='display'>
+      <p className='display-text'>{props.displayText}</p>
+    </div>
+  </div>
+);
+
 class Calculator extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      displayText: '0'
+    };
+  }
+
   render() {
     return (
       <div className='container'>
@@ -30,11 +45,7 @@ class Calculator extends React.Component {
                   <p className='description'>
                     A simple calculator powered by Javascript
                   </p>
-                  <div className='calculator-display'>
-                    <div id='display' className='display'>
-                      <p className='display-text'>0</p>
-                    </div>
-                  </div>
+                  <Display displayText={this.state.displayText} />
                 </div>
               </div>
               <div className='row'>
