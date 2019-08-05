@@ -32,7 +32,7 @@ class Calculator extends React.Component {
                   </p>
                   <div className='calculator-display'>
                     <div id='display' className='display'>
-                      <p className='display-text' />
+                      <p className='display-text'>0</p>
                     </div>
                   </div>
                 </div>
