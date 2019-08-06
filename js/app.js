@@ -41,7 +41,7 @@ const KeyPad = () => (
           <div className='col-3'>
             <button className='btn ctrl ce'>CE</button>
           </div>
-          <div className='col-3'>
+          <div id='equals' className='col-3'>
             <button className='btn result'>=</button>
           </div>
         </div>
@@ -57,7 +57,6 @@ const KeyPad = () => (
               <div id='nine' className='col-4'>
                 <button className='btn dgt nine'>9</button>
               </div>
-
               <div id='four' className='col-4'>
                 <button className='btn dgt four'>4</button>
               </div>
@@ -76,8 +75,8 @@ const KeyPad = () => (
               <div id='three' className='col-4'>
                 <button className='btn dgt three'>3</button>
               </div>
-              <div id='equals' className='col-4'>
-                <button className='btn soptr percent' value='+/-'>
+              <div id='negate' className='col-4'>
+                <button className='btn soptr' value='+/-'>
                   +/-
                 </button>
               </div>

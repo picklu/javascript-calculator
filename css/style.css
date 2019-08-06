@@ -285,8 +285,8 @@ body {
 }
 
 .calculator-buttons {
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin-top: 10px;
+  margin-bottom: 5px;
   padding: 5px 10px 10px 15px;
 }
 
@@ -335,7 +335,7 @@ body {
   text-shadow: 1px 1px 1px #555, -1px 1px 1px #555;
 }
 
-.soptr, .optr {
+.optr {
   background-color: #55a;
   border-color: #55e;
   font-size: 1.2rem;
