@@ -276,7 +276,7 @@ body {
 }
 
 .display-all {
-  font-size: 1rem !important;
+  font-size: 1rem;
   
 }
 
@@ -318,13 +318,6 @@ body {
   outline: 0;
 }
 
-.zero,
-.dot,
-.result,
-.plus {
-  margin-bottom: 0 !important;
-}
-
 .dot {
   font-weight: bold;
 }
@@ -348,6 +341,14 @@ body {
 .plus,
 .result {
   font-size: 1.5rem;
+}
+
+.clear {
+  padding: 0;
+}
+
+.ac {
+  width: 95%;
 }
 
 .result {

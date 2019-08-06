@@ -35,7 +35,7 @@ const KeyPad = () => (
     <div className='col-12'>
       <div className='calculator-buttons'>
         <div className='row'>
-          <div id='clear' className='col-6'>
+          <div id='clear' className='col-6 clear'>
             <button className='btn ctrl ac'>AC</button>
           </div>
           <div className='col-3'>
