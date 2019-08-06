@@ -318,10 +318,6 @@ body {
   outline: 0;
 }
 
-.plus {
-  height: calc((180px/5) * 2 + 10px);
-}
-
 .zero,
 .dot,
 .result,
