@@ -15,6 +15,10 @@ html {
   -ms-overflow-style: scrollbar;
 }
 
+p {
+  margin: 0;
+}
+
 *,
 *::before,
 *::after {
@@ -177,6 +181,16 @@ html {
 }
 
 /* Custom Style  */
+.blink {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
 html {
   font-family: sans-serif;
 }
@@ -244,35 +258,36 @@ body {
 .calculator-display {
   box-shadow: 1px 1px 1px #888, -1px 1px 1px #888, -1px -1px 1px #888,
     1px -1px 1px #888;
+  background: rgba(170, 200, 170, 0.5);
   margin-top: 20px;
   margin-bottom: 10px;
   padding: 0;
+}
+
+.display {
+  color: #25259e;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: bold;
+  line-height: 1.2;
+  letter-spacing: 2px;
+  padding: 2px;
+  text-align: right;
+  text-shadow: 1px 2px 2px #555;
+}
+
+.display-all {
+  font-size: 1rem !important;
+  
+}
+
+.display-text {
+  font-size: 1.5rem;
 }
 
 .calculator-buttons {
   margin-top: 15px;
   margin-bottom: 15px;
   padding: 5px 10px 10px 15px;
-}
-
-.display {
-  background: rgba(170, 200, 170, 0.5);
-  border: 1px inset rgba(200, 200, 200, 0.8);
-  width: 100%;
-  padding: 2px;
-}
-
-.display-text {
-  color: #25259e;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1.5rem;
-  font-weight: bold;
-  line-height: 1.2;
-  letter-spacing: 2px;
-  margin: 10px 0;
-  padding: 0 2px;
-  text-align: right;
-  text-shadow: 1px 2px 2px #555;
 }
 
 .col-3,

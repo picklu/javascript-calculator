@@ -7,6 +7,16 @@
  * Free Code Camp's Front End Libraries Project
  *
  ***********************************************************/
+const Header = props => (
+  <div className='row no-gutters'>
+    <div className='col-12'>
+      <h3 className='title'>FreeCodeCamp Calculator</h3>
+      <p className='description'>A simple calculator powered by Javascript</p>
+      {props.children}
+    </div>
+  </div>
+);
+
 const Footer = () => (
   <div className='container'>
     <div className='footer'>
@@ -19,6 +29,12 @@ const Footer = () => (
 
 const Display = props => (
   <div className='calculator-display'>
+    <div className='display'>
+      <p className='display-all'>
+        {props.displayAll}
+        <span className='blink'>_</span>
+      </p>
+    </div>
     <div id='display' className='display'>
       <p className='display-text'>{props.displayText}</p>
     </div>
@@ -29,6 +45,7 @@ class Calculator extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      displayAll: [],
       displayText: '0'
     };
   }
@@ -39,15 +56,12 @@ class Calculator extends React.Component {
         <div className='row'>
           <div className='col-12'>
             <div className='calculator-body'>
-              <div className='row no-gutters'>
-                <div className='col-12'>
-                  <h3 className='title'>FreeCodeCamp Calculator</h3>
-                  <p className='description'>
-                    A simple calculator powered by Javascript
-                  </p>
-                  <Display displayText={this.state.displayText} />
-                </div>
-              </div>
+              <Header>
+                <Display
+                  displayAll={this.state.displayAll.join()}
+                  displayText={this.state.displayText}
+                />
+              </Header>
               <div className='row'>
                 <div className='col-12'>
                   <div className='calculator-buttons'>
