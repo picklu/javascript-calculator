@@ -7,6 +7,8 @@
  * Free Code Camp's Front End Libraries Project
  *
  ***********************************************************/
+const MAX_VAL = 999999999999;
+
 const Header = () => (
   <div className='row no-gutters'>
     <div className='col-12'>
@@ -16,76 +18,124 @@ const Header = () => (
   </div>
 );
 
-const Display = props => (
-  <div className='calculator-display'>
-    <div className='display'>
-      <p className='display-all'>
-        {props.displayAll}
-        <span className='blink'>_</span>
-      </p>
-    </div>
-    <div id='display' className='display'>
-      <p className='display-text'>{props.displayText}</p>
-    </div>
-  </div>
-);
+const Display = props => {
+  const allInput = props.displayAll;
+  const lastInput = allInput[allInput.length - 1] || '_';
+  const otheInputs = (allInput.slice(0, allInput.length - 1) || '').slice(
+    0,
+    12
+  );
 
-const ControlPad = () => (
-  <div className='row'>
-    <div id='clear' className='col-6 clear'>
-      <button className='btn ctrl ac'>AC</button>
+  return (
+    <div className='calculator-display'>
+      <div className='display'>
+        <p className='display-all'>
+          {otheInputs}
+          <span className='blink'>{lastInput}</span>
+        </p>
+      </div>
+      <div id='display' className='display'>
+        <p className='display-text'>{props.displayText}</p>
+      </div>
     </div>
-    <div className='col-3'>
-      <button className='btn ctrl ce'>CE</button>
-    </div>
-    <div id='equals' className='col-3'>
-      <button className='btn result'>=</button>
-    </div>
-  </div>
-);
+  );
+};
 
-const DigitsPad = () => (
-  <div className='row'>
-    <div id='seven' className='col-4'>
-      <button className='btn dgt seven'>7</button>
+const ControlPad = props => {
+  const handleClick = () => {
+    props.handleClearAll();
+  };
+
+  return (
+    <div className='row'>
+      <div id='clear' className='col-6 clear'>
+        <button className='btn ctrl ac' onClick={handleClick}>
+          AC
+        </button>
+      </div>
+      <div className='col-3'>
+        <button className='btn ctrl ce'>CE</button>
+      </div>
+      <div id='equals' className='col-3'>
+        <button className='btn result'>=</button>
+      </div>
     </div>
-    <div id='eight' className='col-4'>
-      <button className='btn dgt eight'>8</button>
+  );
+};
+
+const DigitsPad = props => {
+  const handleClick = event => {
+    props.handleButtonClick(event);
+  };
+
+  return (
+    <div className='row'>
+      <div id='seven' className='col-4'>
+        <button className='btn dgt seven' onClick={handleClick} value='7'>
+          7
+        </button>
+      </div>
+      <div id='eight' className='col-4'>
+        <button className='btn dgt eight' onClick={handleClick} value='8'>
+          8
+        </button>
+      </div>
+      <div id='nine' className='col-4'>
+        <button className='btn dgt nine' onClick={handleClick} value='9'>
+          9
+        </button>
+      </div>
+      <div id='four' className='col-4'>
+        <button className='btn dgt four' onClick={handleClick} value='4'>
+          4
+        </button>
+      </div>
+      <div id='five' className='col-4'>
+        <button className='btn dgt five' onClick={handleClick} value='5'>
+          5
+        </button>
+      </div>
+      <div id='six' className='col-4'>
+        <button className='btn dgt six' onClick={handleClick} value='6'>
+          6
+        </button>
+      </div>
+      <div id='one' className='col-4'>
+        <button className='btn dgt one' onClick={handleClick} value='1'>
+          1
+        </button>
+      </div>
+      <div id='two' className='col-4'>
+        <button className='btn dgt two' onClick={handleClick} value='2'>
+          2
+        </button>
+      </div>
+      <div id='three' className='col-4'>
+        <button className='btn dgt three' onClick={handleClick} value='3'>
+          3
+        </button>
+      </div>
+      <div id='negate' className='col-4'>
+        <button
+          className='btn soptr'
+          value='+/-'
+          onClick={handleClick}
+          value='-'
+        >
+          +/-
+        </button>
+      </div>
+      <div id='zero' className='col-4'>
+        <button className='btn dgt zero' onClick={handleClick} value='0'>
+          0
+        </button>
+      </div>
+      <div id='decimal' className='col-4'>
+        <button className='btn dot'>.</button>
+      </div>
     </div>
-    <div id='nine' className='col-4'>
-      <button className='btn dgt nine'>9</button>
-    </div>
-    <div id='four' className='col-4'>
-      <button className='btn dgt four'>4</button>
-    </div>
-    <div id='five' className='col-4'>
-      <button className='btn dgt five'>5</button>
-    </div>
-    <div id='six' className='col-4'>
-      <button className='btn dgt six'>6</button>
-    </div>
-    <div id='one' className='col-4'>
-      <button className='btn dgt one'>1</button>
-    </div>
-    <div id='two' className='col-4'>
-      <button className='btn dgt two'>2</button>
-    </div>
-    <div id='three' className='col-4'>
-      <button className='btn dgt three'>3</button>
-    </div>
-    <div id='negate' className='col-4'>
-      <button className='btn soptr' value='+/-'>
-        +/-
-      </button>
-    </div>
-    <div id='zero' className='col-4'>
-      <button className='btn dgt zero'>0</button>
-    </div>
-    <div id='decimal' className='col-4'>
-      <button className='btn dot'>.</button>
-    </div>
-  </div>
-);
+  );
+};
 
 const OperatorsPad = () => (
   <div className='row'>
@@ -112,14 +162,14 @@ const OperatorsPad = () => (
   </div>
 );
 
-const KeyPad = () => (
+const KeyPad = props => (
   <div className='row'>
     <div className='col-12'>
       <div className='calculator-buttons'>
-        <ControlPad />
+        <ControlPad handleClearAll={props.handleClearAll} />
         <div className='row'>
           <div className='col-9'>
-            <DigitsPad />
+            <DigitsPad handleButtonClick={props.handleButtonClick} />
           </div>
           <div className='col-3'>
             <OperatorsPad />
@@ -145,8 +195,23 @@ class Calculator extends React.Component {
     super(props);
     this.state = {
       displayAll: [],
-      displayText: '0'
+      displayText: [0]
     };
+
+    this.handleClearAll = this.handleClearAll.bind(this);
+    this.handleButtonClick = this.handleButtonClick.bind(this);
+  }
+
+  handleClearAll() {
+    this.setState({ displayAll: [] });
+  }
+
+  handleButtonClick(event) {
+    const input = event.target.value;
+
+    this.setState({
+      displayAll: [...this.state.displayAll, input]
+    });
   }
 
   render() {
@@ -155,10 +220,13 @@ class Calculator extends React.Component {
         <div className='calculator-body'>
           <Header />
           <Display
-            displayAll={this.state.displayAll.join()}
-            displayText={this.state.displayText}
+            displayAll={this.state.displayAll.join('')}
+            displayText={this.state.displayText.join('')}
           />
-          <KeyPad />
+          <KeyPad
+            handleClearAll={this.handleClearAll}
+            handleButtonClick={this.handleButtonClick}
+          />
         </div>
       </div>
     );
