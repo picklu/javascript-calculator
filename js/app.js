@@ -44,7 +44,7 @@ const ControlPad = () => (
   </div>
 );
 
-const NumberPad = () => (
+const DigitsPad = () => (
   <div className='row'>
     <div id='seven' className='col-4'>
       <button className='btn dgt seven'>7</button>
@@ -119,7 +119,7 @@ const KeyPad = () => (
         <ControlPad />
         <div className='row'>
           <div className='col-9'>
-            <NumberPad />
+            <DigitsPad />
           </div>
           <div className='col-3'>
             <OperatorsPad />
