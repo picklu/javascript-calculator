@@ -8,6 +8,7 @@
  *
  ***********************************************************/
 const MAX_VAL = 999999999999;
+const OPERATORS = '+-*/';
 
 const Header = () => (
   <div className='row no-gutters'>
@@ -21,10 +22,7 @@ const Header = () => (
 const Display = props => {
   const allInput = props.displayAll;
   const lastInput = allInput[allInput.length - 1] || '_';
-  const otheInputs = (allInput.slice(0, allInput.length - 1) || '').slice(
-    0,
-    12
-  );
+  const otheInputs = allInput.slice(0, allInput.length - 1) || '';
   const displayText = props.displayText || '0';
 
   return (
@@ -132,7 +130,9 @@ const DigitsPad = props => {
         </button>
       </div>
       <div id='decimal' className='col-4'>
-        <button className='btn dot'>.</button>
+        <button className='btn dot' onClick={handleClick} value='.'>
+          .
+        </button>
       </div>
     </div>
   );
@@ -216,19 +216,32 @@ class Calculator extends React.Component {
 
   handleOpsButtonClick(event) {
     const input = event.target.value;
+    const displayText = this.state.displayText[0] || '';
+    let displayAll = [...this.state.displayAll];
+
+    if (OPERATORS.split('').indexOf(displayText) > -1) {
+      displayAll.splice(displayAll.length - 1, 1, input);
+    } else {
+      displayAll = [...displayAll, input];
+    }
 
     this.setState({
-      displayAll: [...this.state.displayAll, input],
+      displayAll,
       displayText: [input]
     });
   }
 
   handleNumButtonClick(event) {
     const input = event.target.value;
+    const displayText = [...this.state.displayText];
+
+    if (input === '.' && displayText.join('').indexOf(input) > -1) return;
 
     this.setState({
       displayAll: [...this.state.displayAll, input],
-      displayText: [...this.state.displayAll, input]
+      displayText: Number(displayText.join(''))
+        ? [...this.state.displayText, input]
+        : [input]
     });
   }
 
