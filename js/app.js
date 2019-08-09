@@ -25,6 +25,7 @@ const Display = props => {
     0,
     12
   );
+  const displayText = props.displayText || '0';
 
   return (
     <div className='calculator-display'>
@@ -35,7 +36,7 @@ const Display = props => {
         </p>
       </div>
       <div id='display' className='display'>
-        <p className='display-text'>{props.displayText}</p>
+        <p className='display-text'>{displayText}</p>
       </div>
     </div>
   );
@@ -65,7 +66,7 @@ const ControlPad = props => {
 
 const DigitsPad = props => {
   const handleClick = event => {
-    props.handleButtonClick(event);
+    props.handleNumButtonClick(event);
   };
 
   return (
@@ -137,42 +138,48 @@ const DigitsPad = props => {
   );
 };
 
-const OperatorsPad = () => (
-  <div className='row'>
-    <div id='divide' className='col-12'>
-      <button className='btn optr obelus' value='/'>
-        &divide;
-      </button>
+const OperatorsPad = props => {
+  const handleClick = event => {
+    props.handleOpsButtonClick(event);
+  };
+
+  return (
+    <div className='row'>
+      <div id='divide' className='col-12'>
+        <button className='btn optr obelus' value='/' onClick={handleClick}>
+          &divide;
+        </button>
+      </div>
+      <div id='multiply' className='col-12'>
+        <button className='btn optr times' value='*' onClick={handleClick}>
+          &times;
+        </button>
+      </div>
+      <div id='subtract' className='col-12'>
+        <button className='btn optr minus' value='-' onClick={handleClick}>
+          -
+        </button>
+      </div>
+      <div id='add' className='col-12'>
+        <button className='btn optr plus' value='+' onClick={handleClick}>
+          +
+        </button>
+      </div>
     </div>
-    <div id='multiply' className='col-12'>
-      <button className='btn optr times' value='*'>
-        &times;
-      </button>
-    </div>
-    <div id='subtract' className='col-12'>
-      <button className='btn optr minus' value='-'>
-        -
-      </button>
-    </div>
-    <div id='add' className='col-12'>
-      <button className='btn optr plus' value='+'>
-        +
-      </button>
-    </div>
-  </div>
-);
+  );
+};
 
 const KeyPad = props => (
   <div className='row'>
     <div className='col-12'>
       <div className='calculator-buttons'>
-        <ControlPad handleClearAll={props.handleClearAll} />
+        <ControlPad {...props} />
         <div className='row'>
           <div className='col-9'>
-            <DigitsPad handleButtonClick={props.handleButtonClick} />
+            <DigitsPad {...props} />
           </div>
           <div className='col-3'>
-            <OperatorsPad />
+            <OperatorsPad {...props} />
           </div>
         </div>
       </div>
@@ -195,22 +202,33 @@ class Calculator extends React.Component {
     super(props);
     this.state = {
       displayAll: [],
-      displayText: [0]
+      displayText: []
     };
 
     this.handleClearAll = this.handleClearAll.bind(this);
-    this.handleButtonClick = this.handleButtonClick.bind(this);
+    this.handleOpsButtonClick = this.handleOpsButtonClick.bind(this);
+    this.handleNumButtonClick = this.handleNumButtonClick.bind(this);
   }
 
   handleClearAll() {
-    this.setState({ displayAll: [] });
+    this.setState({ displayAll: [], displayText: [] });
   }
 
-  handleButtonClick(event) {
+  handleOpsButtonClick(event) {
     const input = event.target.value;
 
     this.setState({
-      displayAll: [...this.state.displayAll, input]
+      displayAll: [...this.state.displayAll, input],
+      displayText: [input]
+    });
+  }
+
+  handleNumButtonClick(event) {
+    const input = event.target.value;
+
+    this.setState({
+      displayAll: [...this.state.displayAll, input],
+      displayText: [...this.state.displayAll, input]
     });
   }
 
@@ -225,7 +243,8 @@ class Calculator extends React.Component {
           />
           <KeyPad
             handleClearAll={this.handleClearAll}
-            handleButtonClick={this.handleButtonClick}
+            handleOpsButtonClick={this.handleOpsButtonClick}
+            handleNumButtonClick={this.handleNumButtonClick}
           />
         </div>
       </div>
