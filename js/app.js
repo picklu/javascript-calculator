@@ -7,7 +7,7 @@
  * Free Code Camp's Front End Libraries Project
  *
  ***********************************************************/
-const MAX_VAL = 999999999999;
+const MAX_LIMIT = 16;
 const OPERATORS = '+-*/';
 
 const Header = () => (
@@ -23,7 +23,10 @@ const Display = props => {
   const allInput = props.displayAll;
   const lastInput = allInput[allInput.length - 1] || '_';
   const otheInputs = allInput.slice(0, allInput.length - 1) || '';
-  const displayText = props.displayText || '0';
+  const displayText =
+    props.displayText.length >= MAX_LIMIT
+      ? 'DIGIT LIMIT REACHED'
+      : props.displayText || '0';
 
   return (
     <div className='calculator-display'>
@@ -238,9 +241,14 @@ class Calculator extends React.Component {
     if (input === '.' && displayText.join('').indexOf(input) > -1) return;
 
     this.setState({
-      displayAll: [...this.state.displayAll, input],
+      displayAll:
+        displayText.length >= MAX_LIMIT
+          ? [...this.state.displayAll]
+          : [...this.state.displayAll, input],
       displayText: Number(displayText.join(''))
-        ? [...this.state.displayText, input]
+        ? displayText.length >= MAX_LIMIT
+          ? [...displayText]
+          : [...displayText, input]
         : [input]
     });
   }
