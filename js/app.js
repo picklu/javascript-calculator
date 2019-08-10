@@ -209,6 +209,7 @@ class Calculator extends React.Component {
     };
 
     this.handleClearAll = this.handleClearAll.bind(this);
+    this.handleClearLast = this.handleClearLast.bind(this);
     this.handleOpsButtonClick = this.handleOpsButtonClick.bind(this);
     this.handleNumButtonClick = this.handleNumButtonClick.bind(this);
   }
@@ -217,12 +218,18 @@ class Calculator extends React.Component {
     this.setState({ displayAll: [], displayText: [] });
   }
 
+  handleClearLast() {
+    let displayText = this.state.displayText;
+    let displayAll = this.state.displayAll;
+    const lastInput = displayAll.splice();
+  }
+
   handleOpsButtonClick(event) {
     const input = event.target.value;
-    const displayText = this.state.displayText.join('');
+    const displayText = [...this.state.displayText];
     let displayAll = [...this.state.displayAll];
 
-    if (OPERATORS.split('').indexOf(displayText) > -1) {
+    if (OPERATORS.split('').indexOf(displayText.join('')) > -1) {
       displayAll.splice(displayAll.length - 1, 1, input);
     } else {
       displayAll = [...displayAll, input];
@@ -250,9 +257,9 @@ class Calculator extends React.Component {
 
     // if the number is within maximum digit length
     if (displayText.length <= MAX_LIMIT) {
-      // if there is operator in the display
-      if (OPERATORS.split('').indexOf(displayText) > -1) {
-        displayText = [...displayText, input];
+      // if there is an operator in the display
+      if (OPERATORS.split('').indexOf(displayText.join('')) > -1) {
+        displayText = [input];
       } else {
         displayText = [...displayText, input];
       }
