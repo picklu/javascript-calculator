@@ -24,7 +24,7 @@ const Display = props => {
   const lastInput = allInput[allInput.length - 1] || '_';
   const otheInputs = allInput.slice(0, allInput.length - 1) || '';
   const displayText =
-    props.displayText.length >= MAX_LIMIT
+    props.displayText.length > MAX_LIMIT
       ? 'DIGIT LIMIT REACHED'
       : props.displayText || '0';
 
@@ -219,7 +219,7 @@ class Calculator extends React.Component {
 
   handleOpsButtonClick(event) {
     const input = event.target.value;
-    const displayText = this.state.displayText[0] || '';
+    const displayText = this.state.displayText.join('');
     let displayAll = [...this.state.displayAll];
 
     if (OPERATORS.split('').indexOf(displayText) > -1) {
@@ -235,21 +235,33 @@ class Calculator extends React.Component {
   }
 
   handleNumButtonClick(event) {
-    const input = event.target.value;
-    const displayText = [...this.state.displayText];
+    let input = event.target.value;
+    let displayText = [...this.state.displayText];
+    let displayAll = [...this.state.displayAll];
 
-    if (input === '.' && displayText.join('').indexOf(input) > -1) return;
+    // If the input is dot
+    if (input === '.') {
+      // if there is a dot in the displayText
+      if (displayText.join('').indexOf(input) > -1) return;
+
+      // update dot accordingly
+      input = Number(displayText.join('')) ? input : '0.';
+    }
+
+    // if the number is within maximum digit length
+    if (displayText.length <= MAX_LIMIT) {
+      // if there is operator in the display
+      if (OPERATORS.split('').indexOf(displayText) > -1) {
+        displayText = [...displayText, input];
+      } else {
+        displayText = [...displayText, input];
+      }
+      displayAll = [...displayAll, input];
+    }
 
     this.setState({
-      displayAll:
-        displayText.length >= MAX_LIMIT
-          ? [...this.state.displayAll]
-          : [...this.state.displayAll, input],
-      displayText: Number(displayText.join(''))
-        ? displayText.length >= MAX_LIMIT
-          ? [...displayText]
-          : [...displayText, input]
-        : [input]
+      displayAll,
+      displayText
     });
   }
 
