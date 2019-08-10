@@ -20,7 +20,7 @@ const Header = () => (
 );
 
 const Display = props => {
-  const allInput = props.displayAll;
+  const allInput = props.displayAll.join('');
   const lastInput = allInput[allInput.length - 1] || '_';
   const otheInputs = allInput.slice(0, allInput.length - 1) || '';
   const displayText =
@@ -205,7 +205,7 @@ class Calculator extends React.Component {
     super(props);
     this.state = {
       displayAll: [],
-      displayText: []
+      displayText: ''
     };
 
     this.handleClearAll = this.handleClearAll.bind(this);
@@ -215,21 +215,24 @@ class Calculator extends React.Component {
   }
 
   handleClearAll() {
-    this.setState({ displayAll: [], displayText: [] });
+    this.setState({ displayAll: [], displayText: '' });
   }
 
   handleClearLast() {
     let displayText = this.state.displayText;
     let displayAll = this.state.displayAll;
-    const lastInput = displayAll.splice();
+    const lastInput = displayAll.pop();
+
+    if (displayText === lastInput) {
+    }
   }
 
   handleOpsButtonClick(event) {
     const input = event.target.value;
-    const displayText = [...this.state.displayText];
+    const displayText = this.state.displayText;
     let displayAll = [...this.state.displayAll];
 
-    if (OPERATORS.split('').indexOf(displayText.join('')) > -1) {
+    if (OPERATORS.split('').indexOf(displayText) > -1) {
       displayAll.splice(displayAll.length - 1, 1, input);
     } else {
       displayAll = [...displayAll, input];
@@ -237,39 +240,37 @@ class Calculator extends React.Component {
 
     this.setState({
       displayAll,
-      displayText: [input]
+      displayText: input
     });
   }
 
   handleNumButtonClick(event) {
     let input = event.target.value;
-    let displayText = [...this.state.displayText];
+    let displayText = this.state.displayText;
     let displayAll = [...this.state.displayAll];
 
     // If the input is dot
     if (input === '.') {
       // if there is a dot in the displayText
-      if (displayText.join('').indexOf(input) > -1) return;
+      if (displayText.indexOf(input) > -1) return;
 
       // update dot accordingly
-      input = Number(displayText.join('')) ? input : '0.';
+      input = Number(displayText) ? input : '0.';
     }
 
     // if the number is within maximum digit length
     if (displayText.length <= MAX_LIMIT) {
       // if there is an operator in the display
-      if (OPERATORS.split('').indexOf(displayText.join('')) > -1) {
-        displayText = [input];
+      if (OPERATORS.split('').indexOf(displayText) > -1) {
+        displayText = input;
       } else {
-        displayText = [...displayText, input];
+        displayAll.pop();
+        displayText = displayText + input;
       }
-      displayAll = [...displayAll, input];
+      displayAll.push(displayText);
     }
 
-    this.setState({
-      displayAll,
-      displayText
-    });
+    this.setState({ displayText, displayAll });
   }
 
   render() {
@@ -278,8 +279,8 @@ class Calculator extends React.Component {
         <div className='calculator-body'>
           <Header />
           <Display
-            displayAll={this.state.displayAll.join('')}
-            displayText={this.state.displayText.join('')}
+            displayAll={this.state.displayAll}
+            displayText={this.state.displayText}
           />
           <KeyPad
             handleClearAll={this.handleClearAll}
