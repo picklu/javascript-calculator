@@ -20,13 +20,13 @@ const Header = () => (
 );
 
 const Display = props => {
-  const allInput = props.displayAll.join('');
+  const allInput = props.inputs.join('');
   const lastInput = allInput[allInput.length - 1] || '_';
   const otheInputs = allInput.slice(0, allInput.length - 1) || '';
-  const displayText =
-    props.displayText.length > MAX_LIMIT
+  const staged =
+    props.staged.length > MAX_LIMIT
       ? 'DIGIT LIMIT REACHED'
-      : props.displayText || '0';
+      : props.staged || '0';
 
   return (
     <div className='calculator-display'>
@@ -37,15 +37,20 @@ const Display = props => {
         </p>
       </div>
       <div id='display' className='display'>
-        <p className='display-text'>{displayText}</p>
+        <p className='display-text'>{staged}</p>
       </div>
     </div>
   );
 };
 
 const ControlPad = props => {
-  const handleClick = () => {
-    props.handleClearAll();
+  const handleClick = event => {
+    if (event.target.innerText === 'AC') {
+      props.handleClearAll();
+    }
+    if (event.target.innerText === 'CE') {
+      props.handleClearLast();
+    }
   };
 
   return (
@@ -56,7 +61,9 @@ const ControlPad = props => {
         </button>
       </div>
       <div className='col-3'>
-        <button className='btn ctrl ce'>CE</button>
+        <button className='btn ctrl ce' onClick={handleClick}>
+          CE
+        </button>
       </div>
       <div id='equals' className='col-3'>
         <button className='btn result'>=</button>
@@ -204,8 +211,8 @@ class Calculator extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      displayAll: [],
-      displayText: ''
+      inputs: [],
+      staged: ''
     };
 
     this.handleClearAll = this.handleClearAll.bind(this);
@@ -215,62 +222,67 @@ class Calculator extends React.Component {
   }
 
   handleClearAll() {
-    this.setState({ displayAll: [], displayText: '' });
+    this.setState({ inputs: [], staged: '' });
   }
 
   handleClearLast() {
-    let displayText = this.state.displayText;
-    let displayAll = this.state.displayAll;
-    const lastInput = displayAll.pop();
+    let staged = this.state.staged;
+    let inputs = [...this.state.inputs];
+    let lastInput = inputs.pop() || '';
 
-    if (displayText === lastInput) {
+    if (lastInput.length === 1) {
+      lasinputs.pop();
     }
+
+    staged = inputs.slice;
+
+    staged = staged.slice(0, staged.length - 1);
   }
 
   handleOpsButtonClick(event) {
     const input = event.target.value;
-    const displayText = this.state.displayText;
-    let displayAll = [...this.state.displayAll];
+    const staged = this.state.staged;
+    let inputs = [...this.state.inputs];
 
-    if (OPERATORS.split('').indexOf(displayText) > -1) {
-      displayAll.splice(displayAll.length - 1, 1, input);
+    if (OPERATORS.split('').indexOf(staged) > -1) {
+      inputs.splice(inputs.length - 1, 1, input);
     } else {
-      displayAll = [...displayAll, input];
+      inputs = [...inputs, input];
     }
 
     this.setState({
-      displayAll,
-      displayText: input
+      inputs,
+      staged: input
     });
   }
 
   handleNumButtonClick(event) {
     let input = event.target.value;
-    let displayText = this.state.displayText;
-    let displayAll = [...this.state.displayAll];
+    let staged = this.state.staged;
+    let inputs = [...this.state.inputs];
 
     // If the input is dot
     if (input === '.') {
-      // if there is a dot in the displayText
-      if (displayText.indexOf(input) > -1) return;
+      // if there is a dot in the staged
+      if (staged.indexOf(input) > -1) return;
 
       // update dot accordingly
-      input = Number(displayText) ? input : '0.';
+      input = Number(staged) ? input : '0.';
     }
 
     // if the number is within maximum digit length
-    if (displayText.length <= MAX_LIMIT) {
+    if (staged.length <= MAX_LIMIT) {
       // if there is an operator in the display
-      if (OPERATORS.split('').indexOf(displayText) > -1) {
-        displayText = input;
+      if (OPERATORS.split('').indexOf(staged) > -1) {
+        staged = input;
       } else {
-        displayAll.pop();
-        displayText = displayText + input;
+        inputs.pop();
+        staged = staged + input;
       }
-      displayAll.push(displayText);
+      inputs.push(staged);
     }
 
-    this.setState({ displayText, displayAll });
+    this.setState({ staged, inputs });
   }
 
   render() {
@@ -278,12 +290,10 @@ class Calculator extends React.Component {
       <div className='container'>
         <div className='calculator-body'>
           <Header />
-          <Display
-            displayAll={this.state.displayAll}
-            displayText={this.state.displayText}
-          />
+          <Display inputs={this.state.inputs} staged={this.state.staged} />
           <KeyPad
             handleClearAll={this.handleClearAll}
+            handleClearLast={this.handleClearLast}
             handleOpsButtonClick={this.handleOpsButtonClick}
             handleNumButtonClick={this.handleNumButtonClick}
           />
