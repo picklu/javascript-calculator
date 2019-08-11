@@ -19,25 +19,23 @@ const Header = () => (
   </div>
 );
 
-const Display = props => {
-  const allInput = props.inputs.join('');
+const Display = ({ staged, inputs, ...props }) => {
+  const allInput = inputs.concat(staged).join('');
   const lastInput = allInput[allInput.length - 1] || '_';
-  const otheInputs = allInput.slice(0, allInput.length - 1) || '';
-  const staged =
-    props.staged.length > MAX_LIMIT
-      ? 'DIGIT LIMIT REACHED'
-      : props.staged || '0';
+  const otherInputs = allInput.slice(0, allInput.length - 1) || '';
+  const displayStaged =
+    staged.length > MAX_LIMIT ? 'DIGIT LIMIT REACHED' : staged || '0';
 
   return (
     <div className='calculator-display'>
       <div className='display'>
         <p className='display-all'>
-          {otheInputs}
+          {otherInputs}
           <span className='blink'>{lastInput}</span>
         </p>
       </div>
       <div id='display' className='display'>
-        <p className='display-text'>{staged}</p>
+        <p className='display-text'>{displayStaged}</p>
       </div>
     </div>
   );
@@ -221,6 +219,13 @@ class Calculator extends React.Component {
     this.handleNumButtonClick = this.handleNumButtonClick.bind(this);
   }
 
+  commitInput(input) {
+    this.setState({
+      staged: input,
+      inputs: [...this.state.inputs, this.state.staged]
+    });
+  }
+
   handleClearAll() {
     this.setState({ inputs: [], staged: '' });
   }
@@ -228,15 +233,27 @@ class Calculator extends React.Component {
   handleClearLast() {
     let staged = this.state.staged;
     let inputs = [...this.state.inputs];
+
+    // Remove the immediate last chunk of input
     let lastInput = inputs.pop() || '';
 
-    if (lastInput.length === 1) {
-      lasinputs.pop();
+    // Get the last last input
+    if (staged.length > 0) {
+      if (staged.length === 1) {
+        staged = inputs.slice();
+      }
+
+      staged = staged.slice(0, staged.length - 1);
+      // inputs = ['24234', '+', '24242' '-']
+      // staged = '-'
+
+      if (lastInput.length === 1) {
+      }
+
+      staged = inputs.slice;
+
+      staged = staged.slice(0, staged.length - 1);
     }
-
-    staged = inputs.slice;
-
-    staged = staged.slice(0, staged.length - 1);
   }
 
   handleOpsButtonClick(event) {
@@ -245,25 +262,19 @@ class Calculator extends React.Component {
     let inputs = [...this.state.inputs];
 
     if (OPERATORS.split('').indexOf(staged) > -1) {
-      inputs.splice(inputs.length - 1, 1, input);
+      this.setState({ staged: input });
     } else {
-      inputs = [...inputs, input];
+      this.commitInput(input);
     }
-
-    this.setState({
-      inputs,
-      staged: input
-    });
   }
 
   handleNumButtonClick(event) {
     let input = event.target.value;
     let staged = this.state.staged;
-    let inputs = [...this.state.inputs];
 
     // If the input is dot
     if (input === '.') {
-      // if there is a dot in the staged
+      // If there is a dot in the staged
       if (staged.indexOf(input) > -1) return;
 
       // update dot accordingly
@@ -274,15 +285,11 @@ class Calculator extends React.Component {
     if (staged.length <= MAX_LIMIT) {
       // if there is an operator in the display
       if (OPERATORS.split('').indexOf(staged) > -1) {
-        staged = input;
+        this.commitInput(input);
       } else {
-        inputs.pop();
-        staged = staged + input;
+        this.setState({ staged: staged + input });
       }
-      inputs.push(staged);
     }
-
-    this.setState({ staged, inputs });
   }
 
   render() {
