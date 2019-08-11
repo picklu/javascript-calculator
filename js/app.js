@@ -273,7 +273,12 @@ class Calculator extends React.Component {
     const input = '=';
     const staged = this.state.staged;
     const equation = this.state.inputs.concat(staged).join('');
-    const result = eval(equation) || '';
+    let result = eval(equation) || '';
+
+    if (parseFloat(result) != parseInt(result)) {
+      result = numeral(result).format('0.0000');
+    }
+
     this.setState({
       staged: result.toString(),
       result: equation + input + result,
