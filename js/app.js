@@ -123,12 +123,7 @@ const DigitsPad = props => {
         </button>
       </div>
       <div id='negate' className='col-4'>
-        <button
-          className='btn soptr'
-          value='+/-'
-          onClick={handleClick}
-          value='-'
-        >
+        <button className='btn soptr' value='+-' onClick={handleClick}>
           +/-
         </button>
       </div>
@@ -239,11 +234,9 @@ class Calculator extends React.Component {
       if (staged.length === 1) {
         staged = inputs.pop() || '';
       }
-
       if (staged.length > 1) {
         staged = staged.slice(0, staged.length - 1);
       }
-
       this.setState({ staged, inputs });
     }
   }
@@ -262,6 +255,7 @@ class Calculator extends React.Component {
   handleNumButtonClick(event) {
     let input = event.target.value;
     let staged = this.state.staged;
+    const inputs = [...this.state.inputs];
 
     // If the input is dot
     if (input === '.') {
@@ -270,6 +264,17 @@ class Calculator extends React.Component {
 
       // update dot accordingly
       input = Number(staged) ? input : '0.';
+    }
+
+    if (input === '+-') {
+      staged =
+        inputs.length === 0 && Number(staged)
+          ? staged[0] === '-'
+            ? staged.slice(1, staged.length)
+            : '-' + staged
+          : staged;
+      this.setState({ staged });
+      return;
     }
 
     // if the number is within maximum digit length
