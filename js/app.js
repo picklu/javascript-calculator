@@ -53,8 +53,8 @@ const ControlPad = props => {
 
   return (
     <div className='row'>
-      <div id='clear' className='col-6 clear'>
-        <button className='btn ctrl ac' onClick={handleClick}>
+      <div className='col-6 clear'>
+        <button id='clear' className='btn ctrl ac' onClick={handleClick}>
           AC
         </button>
       </div>
