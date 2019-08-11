@@ -235,31 +235,22 @@ class Calculator extends React.Component {
     let inputs = [...this.state.inputs];
 
     // Remove the immediate last chunk of input
-    let lastInput = inputs.pop() || '';
-
-    // Get the last last input
     if (staged.length > 0) {
       if (staged.length === 1) {
-        staged = inputs.slice();
+        staged = inputs.pop() || '';
       }
 
-      staged = staged.slice(0, staged.length - 1);
-      // inputs = ['24234', '+', '24242' '-']
-      // staged = '-'
-
-      if (lastInput.length === 1) {
+      if (staged.length > 1) {
+        staged = staged.slice(0, staged.length - 1);
       }
 
-      staged = inputs.slice;
-
-      staged = staged.slice(0, staged.length - 1);
+      this.setState({ staged, inputs });
     }
   }
 
   handleOpsButtonClick(event) {
     const input = event.target.value;
     const staged = this.state.staged;
-    let inputs = [...this.state.inputs];
 
     if (OPERATORS.split('').indexOf(staged) > -1) {
       this.setState({ staged: input });
