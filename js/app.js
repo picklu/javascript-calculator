@@ -29,7 +29,7 @@ const Display = ({ staged, inputs, result, ...props }) => {
   const lastInput = allInput[allInput.length - 1] || '_';
   const otherInputs = allInput.slice(0, allInput.length - 1) || '';
   const displayStaged =
-    !!staged.length > MAX_LIMIT
+    staged.length > MAX_LIMIT
       ? 'DIGIT LIMIT REACHED'
       : staged.slice(0, MAX_LIMIT) || '0';
 
@@ -41,8 +41,10 @@ const Display = ({ staged, inputs, result, ...props }) => {
           <span className='blink'>{lastInput}</span>
         </p>
       </div>
-      <div id='display' className='display'>
-        <p className='display-text'>{displayStaged}</p>
+      <div className='display'>
+        <p id='display' className='display-text'>
+          {displayStaged}
+        </p>
       </div>
     </div>
   );
@@ -282,7 +284,6 @@ class Calculator extends React.Component {
   handleOpsButtonClick(event) {
     const input = event.target.value;
     const staged = this.state.staged;
-    const result = this.state.result;
 
     if (OPERATORS.split('').indexOf(staged) > -1) {
       this.commitInput(input, true);
@@ -295,7 +296,6 @@ class Calculator extends React.Component {
     let input = event.target.value;
     let staged = this.state.staged;
     const inputs = [...this.state.inputs];
-    const result = this.state.result;
 
     // If the input is dot
     if (input === '.') {
@@ -321,8 +321,10 @@ class Calculator extends React.Component {
     if (staged.length <= MAX_LIMIT) {
       // if there is an operator in the display
       if (OPERATORS.split('').indexOf(staged) > -1) {
+        if (input === '0') return;
         this.commitInput(input);
       } else {
+        if (input === '0' && staged === '') return;
         this.commitInput(staged + input, true);
       }
     }
