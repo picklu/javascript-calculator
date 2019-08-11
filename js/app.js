@@ -19,12 +19,20 @@ const Header = () => (
   </div>
 );
 
-const Display = ({ staged, inputs, ...props }) => {
-  const allInput = inputs.concat(staged).join('');
+const Display = ({ staged, inputs, result, ...props }) => {
+  let allInput;
+  if (result) {
+    allInput = result;
+  } else {
+    allInput = inputs.concat(staged).join('');
+  }
   const lastInput = allInput[allInput.length - 1] || '_';
   const otherInputs = allInput.slice(0, allInput.length - 1) || '';
+  console.log('==========', staged, '==========');
   const displayStaged =
-    staged.length > MAX_LIMIT ? 'DIGIT LIMIT REACHED' : staged || '0';
+    staged.length > MAX_LIMIT
+      ? 'DIGIT LIMIT REACHED'
+      : staged.slice(0, MAX_LIMIT) || '0';
 
   return (
     <div className='calculator-display'>
@@ -43,11 +51,14 @@ const Display = ({ staged, inputs, ...props }) => {
 
 const ControlPad = props => {
   const handleClick = event => {
-    if (event.target.innerText === 'AC') {
+    if (event.target.id === 'clear') {
       props.handleClearAll();
     }
-    if (event.target.innerText === 'CE') {
+    if (event.target.id === 'clear-each') {
       props.handleClearLast();
+    }
+    if (event.target.id === 'equals') {
+      props.handleResult();
     }
   };
 
@@ -59,12 +70,14 @@ const ControlPad = props => {
         </button>
       </div>
       <div className='col-3'>
-        <button className='btn ctrl ce' onClick={handleClick}>
+        <button id='clear-each' className='btn ctrl ce' onClick={handleClick}>
           CE
         </button>
       </div>
-      <div id='equals' className='col-3'>
-        <button className='btn result'>=</button>
+      <div className='col-3'>
+        <button id='equals' className='btn result' onClick={handleClick}>
+          =
+        </button>
       </div>
     </div>
   );
@@ -205,11 +218,13 @@ class Calculator extends React.Component {
     super(props);
     this.state = {
       inputs: [],
+      result: '',
       staged: ''
     };
 
     this.handleClearAll = this.handleClearAll.bind(this);
     this.handleClearLast = this.handleClearLast.bind(this);
+    this.handleResult = this.handleResult.bind(this);
     this.handleOpsButtonClick = this.handleOpsButtonClick.bind(this);
     this.handleNumButtonClick = this.handleNumButtonClick.bind(this);
   }
@@ -222,12 +237,16 @@ class Calculator extends React.Component {
   }
 
   handleClearAll() {
-    this.setState({ inputs: [], staged: '' });
+    this.setState({ inputs: [], result: '', staged: '' });
   }
 
   handleClearLast() {
     let staged = this.state.staged;
     let inputs = [...this.state.inputs];
+    const result = this.state.result;
+    if (result) {
+      this.handleClearAll();
+    }
 
     // Remove the immediate last chunk of input
     if (staged.length > 0) {
@@ -241,9 +260,25 @@ class Calculator extends React.Component {
     }
   }
 
+  handleResult() {
+    const input = '=';
+    const staged = this.state.staged;
+    const equation = this.state.inputs.concat(staged).join('');
+    const result = eval(equation);
+    this.setState({
+      staged: result,
+      result: equation + input + result,
+      inputs: []
+    });
+  }
+
   handleOpsButtonClick(event) {
     const input = event.target.value;
     const staged = this.state.staged;
+    const result = this.state.result;
+    if (result) {
+      this.setState({ result: '' });
+    }
 
     if (OPERATORS.split('').indexOf(staged) > -1) {
       this.setState({ staged: input });
@@ -256,6 +291,10 @@ class Calculator extends React.Component {
     let input = event.target.value;
     let staged = this.state.staged;
     const inputs = [...this.state.inputs];
+    const result = this.state.result;
+    if (result) {
+      this.setState({ result: '' });
+    }
 
     // If the input is dot
     if (input === '.') {
@@ -293,10 +332,15 @@ class Calculator extends React.Component {
       <div className='container'>
         <div className='calculator-body'>
           <Header />
-          <Display inputs={this.state.inputs} staged={this.state.staged} />
+          <Display
+            inputs={this.state.inputs}
+            staged={this.state.staged}
+            result={this.state.result}
+          />
           <KeyPad
             handleClearAll={this.handleClearAll}
             handleClearLast={this.handleClearLast}
+            handleResult={this.handleResult}
             handleOpsButtonClick={this.handleOpsButtonClick}
             handleNumButtonClick={this.handleNumButtonClick}
           />
