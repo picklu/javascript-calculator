@@ -21,16 +21,15 @@ const Header = () => (
 
 const Display = ({ staged, inputs, result, ...props }) => {
   let allInput;
-  if (result) {
+  if (!!result) {
     allInput = result;
   } else {
     allInput = inputs.concat(staged).join('');
   }
   const lastInput = allInput[allInput.length - 1] || '_';
   const otherInputs = allInput.slice(0, allInput.length - 1) || '';
-  console.log('==========', staged, '==========');
   const displayStaged =
-    staged.length > MAX_LIMIT
+    !!staged.length > MAX_LIMIT
       ? 'DIGIT LIMIT REACHED'
       : staged.slice(0, MAX_LIMIT) || '0';
 
@@ -229,11 +228,19 @@ class Calculator extends React.Component {
     this.handleNumButtonClick = this.handleNumButtonClick.bind(this);
   }
 
-  commitInput(input) {
-    this.setState({
-      staged: input,
-      inputs: [...this.state.inputs, this.state.staged]
-    });
+  commitInput(input, partial = false) {
+    if (partial) {
+      this.setState({
+        staged: input,
+        result: ''
+      });
+    } else {
+      this.setState({
+        staged: input,
+        result: '',
+        inputs: [...this.state.inputs, this.state.staged]
+      });
+    }
   }
 
   handleClearAll() {
@@ -244,7 +251,7 @@ class Calculator extends React.Component {
     let staged = this.state.staged;
     let inputs = [...this.state.inputs];
     const result = this.state.result;
-    if (result) {
+    if (!!result) {
       this.handleClearAll();
     }
 
@@ -264,9 +271,9 @@ class Calculator extends React.Component {
     const input = '=';
     const staged = this.state.staged;
     const equation = this.state.inputs.concat(staged).join('');
-    const result = eval(equation);
+    const result = eval(equation) || '';
     this.setState({
-      staged: result,
+      staged: result.toString(),
       result: equation + input + result,
       inputs: []
     });
@@ -276,12 +283,9 @@ class Calculator extends React.Component {
     const input = event.target.value;
     const staged = this.state.staged;
     const result = this.state.result;
-    if (result) {
-      this.setState({ result: '' });
-    }
 
     if (OPERATORS.split('').indexOf(staged) > -1) {
-      this.setState({ staged: input });
+      this.commitInput(input, true);
     } else {
       this.commitInput(input);
     }
@@ -292,9 +296,6 @@ class Calculator extends React.Component {
     let staged = this.state.staged;
     const inputs = [...this.state.inputs];
     const result = this.state.result;
-    if (result) {
-      this.setState({ result: '' });
-    }
 
     // If the input is dot
     if (input === '.') {
@@ -312,7 +313,7 @@ class Calculator extends React.Component {
             ? staged.slice(1, staged.length)
             : '-' + staged
           : staged;
-      this.setState({ staged });
+      this.commitInput(staged, true);
       return;
     }
 
@@ -322,7 +323,7 @@ class Calculator extends React.Component {
       if (OPERATORS.split('').indexOf(staged) > -1) {
         this.commitInput(input);
       } else {
-        this.setState({ staged: staged + input });
+        this.commitInput(staged + input, true);
       }
     }
   }
