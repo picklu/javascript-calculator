@@ -11,11 +11,9 @@ const MAX_LIMIT = 16;
 const OPERATORS = '+-*/';
 
 const Header = () => (
-  <div className='row no-gutters'>
-    <div className='col-12'>
-      <h3 className='title'>FreeCodeCamp Calculator</h3>
-      <p className='description'>A simple calculator powered by Javascript</p>
-    </div>
+  <div className='no-gutters'>
+    <h3 className='title'>FreeCodeCamp Calculator</h3>
+    <p className='description'>A simple calculator powered by Javascript</p>
   </div>
 );
 
@@ -35,16 +33,12 @@ const Display = ({ staged, inputs, result, ...props }) => {
 
   return (
     <div className='calculator-display'>
-      <div className='display'>
-        <p className='display-all'>
-          {otherInputs}
-          <span className='blink'>{lastInput}</span>
-        </p>
+      <div className='display display-all'>
+        {otherInputs}
+        <span className='blink'>{lastInput}</span>
       </div>
-      <div className='display'>
-        <p id='display' className='display-text'>
-          {displayStaged}
-        </p>
+      <div id='display' className='display'>
+        {displayStaged}
       </div>
     </div>
   );
