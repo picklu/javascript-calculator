@@ -342,22 +342,20 @@ class Calculator extends React.Component {
 
   render() {
     return (
-      <div className='container'>
-        <div className='calculator-body'>
-          <Header />
-          <Display
-            inputs={this.state.inputs}
-            staged={this.state.staged}
-            result={this.state.result}
-          />
-          <KeyPad
-            handleClearAll={this.handleClearAll}
-            handleClearLast={this.handleClearLast}
-            handleResult={this.handleResult}
-            handleOpsButtonClick={this.handleOpsButtonClick}
-            handleNumButtonClick={this.handleNumButtonClick}
-          />
-        </div>
+      <div className='container calculator-body'>
+        <Header />
+        <Display
+          inputs={this.state.inputs}
+          staged={this.state.staged}
+          result={this.state.result}
+        />
+        <KeyPad
+          handleClearAll={this.handleClearAll}
+          handleClearLast={this.handleClearLast}
+          handleResult={this.handleResult}
+          handleOpsButtonClick={this.handleOpsButtonClick}
+          handleNumButtonClick={this.handleNumButtonClick}
+        />
       </div>
     );
   }
