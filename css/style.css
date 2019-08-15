@@ -280,10 +280,6 @@ body {
   word-break: break-all ;
 }
 
-.display-last {
-  font-size: 1rem;
-}
-
 .calculator-buttons {
   margin-top: 10px;
   margin-bottom: 5px;

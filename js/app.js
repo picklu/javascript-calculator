@@ -17,7 +17,7 @@ const Header = () => (
   </div>
 );
 
-const Display = ({ staged, inputs, result, ...props }) => {
+const Display = ({ staged, inputs, result }) => {
   let allInput;
   if (!!result) {
     allInput = result;
