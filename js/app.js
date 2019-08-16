@@ -85,63 +85,63 @@ const DigitsPad = props => {
 
   return (
     <div className='row'>
-      <div id='seven' className='col-4'>
-        <button className='btn dgt seven' onClick={handleClick} value='7'>
+      <div className='col-4'>
+        <button id='seven' className='btn dgt seven' onClick={handleClick} value='7'>
           7
         </button>
       </div>
-      <div id='eight' className='col-4'>
-        <button className='btn dgt eight' onClick={handleClick} value='8'>
+      <div className='col-4'>
+        <button id='eight' className='btn dgt eight' onClick={handleClick} value='8'>
           8
         </button>
       </div>
-      <div id='nine' className='col-4'>
-        <button className='btn dgt nine' onClick={handleClick} value='9'>
+      <div className='col-4'>
+        <button id='nine' className='btn dgt nine' onClick={handleClick} value='9'>
           9
         </button>
       </div>
-      <div id='four' className='col-4'>
-        <button className='btn dgt four' onClick={handleClick} value='4'>
+      <div className='col-4'>
+        <button id='four' className='btn dgt four' onClick={handleClick} value='4'>
           4
         </button>
       </div>
-      <div id='five' className='col-4'>
-        <button className='btn dgt five' onClick={handleClick} value='5'>
+      <div className='col-4'>
+        <button id='five' className='btn dgt five' onClick={handleClick} value='5'>
           5
         </button>
       </div>
-      <div id='six' className='col-4'>
-        <button className='btn dgt six' onClick={handleClick} value='6'>
+      <div className='col-4'>
+        <button id='six' className='btn dgt six' onClick={handleClick} value='6'>
           6
         </button>
       </div>
-      <div id='one' className='col-4'>
-        <button className='btn dgt one' onClick={handleClick} value='1'>
+      <div className='col-4'>
+        <button id='one' className='btn dgt one' onClick={handleClick} value='1'>
           1
         </button>
       </div>
-      <div id='two' className='col-4'>
-        <button className='btn dgt two' onClick={handleClick} value='2'>
+      <div className='col-4'>
+        <button id='two' className='btn dgt two' onClick={handleClick} value='2'>
           2
         </button>
       </div>
-      <div id='three' className='col-4'>
-        <button className='btn dgt three' onClick={handleClick} value='3'>
+      <div className='col-4'>
+        <button id='three' className='btn dgt three' onClick={handleClick} value='3'>
           3
         </button>
       </div>
-      <div id='negate' className='col-4'>
-        <button className='btn soptr' value='+-' onClick={handleClick}>
+      <div className='col-4'>
+        <button id='negate' className='btn soptr' value='+-' onClick={handleClick}>
           +/-
         </button>
       </div>
-      <div id='zero' className='col-4'>
-        <button className='btn dgt zero' onClick={handleClick} value='0'>
+      <div className='col-4'>
+        <button id='zero' className='btn dgt zero' onClick={handleClick} value='0'>
           0
         </button>
       </div>
-      <div id='decimal' className='col-4'>
-        <button className='btn dot' onClick={handleClick} value='.'>
+      <div className='col-4'>
+        <button id='decimal' className='btn dot' onClick={handleClick} value='.'>
           .
         </button>
       </div>
