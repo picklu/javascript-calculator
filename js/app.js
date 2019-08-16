@@ -156,23 +156,23 @@ const OperatorsPad = props => {
 
   return (
     <div className='row'>
-      <div id='divide' className='col-12'>
-        <button className='btn optr obelus' value='/' onClick={handleClick}>
+      <div className='col-12'>
+        <button id='divide' className='btn optr obelus' value='/' onClick={handleClick}>
           &divide;
         </button>
       </div>
-      <div id='multiply' className='col-12'>
-        <button className='btn optr times' value='*' onClick={handleClick}>
+      <div className='col-12'>
+        <button id='multiply' className='btn optr times' value='*' onClick={handleClick}>
           &times;
         </button>
       </div>
-      <div id='subtract' className='col-12'>
-        <button className='btn optr minus' value='-' onClick={handleClick}>
+      <div className='col-12'>
+        <button id='subtract' className='btn optr minus' value='-' onClick={handleClick}>
           -
         </button>
       </div>
-      <div id='add' className='col-12'>
-        <button className='btn optr plus' value='+' onClick={handleClick}>
+      <div className='col-12'>
+        <button id='add' className='btn optr plus' value='+' onClick={handleClick}>
           +
         </button>
       </div>
