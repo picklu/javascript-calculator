@@ -201,7 +201,7 @@ body {
   background-size: 100% auto;
 }
 
-.calculator-body {
+.calculator {
   background-color: #eee;
   border-radius: 10px;
   box-shadow: 10px 10px 15px #333, -1px -1px 5px #333,
@@ -226,7 +226,7 @@ body {
 }
 
 @media (min-width: 420px) {
-  .calculator-body {
+  .calculator {
     width: 300px;
     margin: 2.5rem auto 0 auto !important;
   }

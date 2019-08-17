@@ -420,7 +420,7 @@ class Calculator extends React.Component {
 
   render() {
     return (
-      <div className='container calculator-body'>
+      <div className='container calculator'>
         <Header />
         <Display
           inputs={this.state.inputs}
