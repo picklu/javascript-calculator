@@ -32,12 +32,12 @@ const Display = ({ staged, inputs, result }) => {
       : staged.slice(0, MAX_LIMIT) || '0';
 
   return (
-    <div className='calculator-display'>
-      <div className='display display-all'>
+    <div className='display'>
+      <div className='display-equation'>
         {otherInputs}
         <span className='blink'>{lastInput}</span>
       </div>
-      <div id='display' className='display'>
+      <div id='display' className='display-staged'>
         {displayStaged}
       </div>
     </div>

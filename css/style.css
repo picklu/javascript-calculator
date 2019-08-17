@@ -255,29 +255,28 @@ body {
   text-shadow: 1px 1px 2px #000;
 }
 
-.calculator-display {
-  box-shadow: 1px 1px 1px #888, -1px 1px 1px #888, -1px -1px 1px #888,
-    1px -1px 1px #888;
-  background: rgba(170, 200, 170, 0.5);
-  margin-top: 20px;
-  margin-bottom: 10px;
-  padding: 0;
-}
-
 .display {
+  box-shadow: 1px 1px 1px #888, -1px 1px 1px #888, -1px -1px 1px #888,
+  1px -1px 1px #888;
+  background: rgba(170, 200, 170, 0.5);
   color: #25259e;
   font-family: 'Orbitron', sans-serif;
   font-weight: bold;
-  line-height: 1.2;
+  margin-top: 20px;
+  margin-bottom: 10px;
   letter-spacing: 2px;
-  padding: 2px;
-  text-align: right;
   text-shadow: 1px 2px 2px #555;
+  text-align: right;
+  padding: 2px;
 }
 
-.display-all {
+.display-equation {
   font-size: .8rem;
   word-break: break-all ;
+}
+
+.display-staged {
+  line-height: 1.2;
 }
 
 .calculator-buttons {
