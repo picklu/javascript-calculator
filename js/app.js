@@ -263,7 +263,7 @@ const OperatorsPad = props => {
 const KeyPad = props => (
   <div className='row'>
     <div className='col-12'>
-      <div className='calculator-buttons'>
+      <div className='buttons'>
         <ControlPad {...props} />
         <div className='row'>
           <div className='col-9'>
@@ -370,7 +370,11 @@ class Calculator extends React.Component {
     const staged = this.state.staged;
 
     if (OPERATORS.split('').indexOf(staged) > -1) {
-      this.commitInput(input, true);
+      if (input === '-') {
+        this.commitInput(input);
+      } else {
+        this.commitInput(input, true);
+      }
     } else {
       this.commitInput(input);
     }
