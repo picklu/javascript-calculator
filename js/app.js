@@ -18,14 +18,14 @@ const Header = () => (
 );
 
 const Display = ({ staged, inputs, result }) => {
-  let allInput;
+  let equation;
   if (!!result) {
-    allInput = result;
+    equation = result;
   } else {
-    allInput = inputs.concat(staged).join('');
+    equation = inputs.concat(staged).join('');
   }
-  const lastInput = allInput[allInput.length - 1] || '_';
-  const otherInputs = allInput.slice(0, allInput.length - 1) || '';
+  const lastInput = equation[equation.length - 1] || '_';
+  const otherInputs = equation.slice(0, equation.length - 1) || '';
   const displayStaged =
     staged.length > MAX_LIMIT
       ? 'DIGIT LIMIT REACHED'
@@ -86,62 +86,122 @@ const DigitsPad = props => {
   return (
     <div className='row'>
       <div className='col-4'>
-        <button id='seven' className='btn dgt seven' onClick={handleClick} value='7'>
+        <button
+          id='seven'
+          className='btn dgt seven'
+          onClick={handleClick}
+          value='7'
+        >
           7
         </button>
       </div>
       <div className='col-4'>
-        <button id='eight' className='btn dgt eight' onClick={handleClick} value='8'>
+        <button
+          id='eight'
+          className='btn dgt eight'
+          onClick={handleClick}
+          value='8'
+        >
           8
         </button>
       </div>
       <div className='col-4'>
-        <button id='nine' className='btn dgt nine' onClick={handleClick} value='9'>
+        <button
+          id='nine'
+          className='btn dgt nine'
+          onClick={handleClick}
+          value='9'
+        >
           9
         </button>
       </div>
       <div className='col-4'>
-        <button id='four' className='btn dgt four' onClick={handleClick} value='4'>
+        <button
+          id='four'
+          className='btn dgt four'
+          onClick={handleClick}
+          value='4'
+        >
           4
         </button>
       </div>
       <div className='col-4'>
-        <button id='five' className='btn dgt five' onClick={handleClick} value='5'>
+        <button
+          id='five'
+          className='btn dgt five'
+          onClick={handleClick}
+          value='5'
+        >
           5
         </button>
       </div>
       <div className='col-4'>
-        <button id='six' className='btn dgt six' onClick={handleClick} value='6'>
+        <button
+          id='six'
+          className='btn dgt six'
+          onClick={handleClick}
+          value='6'
+        >
           6
         </button>
       </div>
       <div className='col-4'>
-        <button id='one' className='btn dgt one' onClick={handleClick} value='1'>
+        <button
+          id='one'
+          className='btn dgt one'
+          onClick={handleClick}
+          value='1'
+        >
           1
         </button>
       </div>
       <div className='col-4'>
-        <button id='two' className='btn dgt two' onClick={handleClick} value='2'>
+        <button
+          id='two'
+          className='btn dgt two'
+          onClick={handleClick}
+          value='2'
+        >
           2
         </button>
       </div>
       <div className='col-4'>
-        <button id='three' className='btn dgt three' onClick={handleClick} value='3'>
+        <button
+          id='three'
+          className='btn dgt three'
+          onClick={handleClick}
+          value='3'
+        >
           3
         </button>
       </div>
       <div className='col-4'>
-        <button id='negate' className='btn soptr' value='+-' onClick={handleClick}>
+        <button
+          id='negate'
+          className='btn soptr'
+          value='+-'
+          onClick={handleClick}
+        >
           +/-
         </button>
       </div>
       <div className='col-4'>
-        <button id='zero' className='btn dgt zero' onClick={handleClick} value='0'>
+        <button
+          id='zero'
+          className='btn dgt zero'
+          onClick={handleClick}
+          value='0'
+        >
           0
         </button>
       </div>
       <div className='col-4'>
-        <button id='decimal' className='btn dot' onClick={handleClick} value='.'>
+        <button
+          id='decimal'
+          className='btn dot'
+          onClick={handleClick}
+          value='.'
+        >
           .
         </button>
       </div>
@@ -157,22 +217,42 @@ const OperatorsPad = props => {
   return (
     <div className='row'>
       <div className='col-12'>
-        <button id='divide' className='btn optr obelus' value='/' onClick={handleClick}>
+        <button
+          id='divide'
+          className='btn optr obelus'
+          value='/'
+          onClick={handleClick}
+        >
           &divide;
         </button>
       </div>
       <div className='col-12'>
-        <button id='multiply' className='btn optr times' value='*' onClick={handleClick}>
+        <button
+          id='multiply'
+          className='btn optr times'
+          value='*'
+          onClick={handleClick}
+        >
           &times;
         </button>
       </div>
       <div className='col-12'>
-        <button id='subtract' className='btn optr minus' value='-' onClick={handleClick}>
+        <button
+          id='subtract'
+          className='btn optr minus'
+          value='-'
+          onClick={handleClick}
+        >
           -
         </button>
       </div>
       <div className='col-12'>
-        <button id='add' className='btn optr plus' value='+' onClick={handleClick}>
+        <button
+          id='add'
+          className='btn optr plus'
+          value='+'
+          onClick={handleClick}
+        >
           +
         </button>
       </div>
