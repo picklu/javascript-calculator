@@ -368,11 +368,19 @@ class Calculator extends React.Component {
   handleOpsButtonClick(event) {
     const input = event.target.value;
     const staged = this.state.staged;
+    const inputs = [...this.state.inputs];
 
     if (OPERATORS.split('').indexOf(staged) > -1) {
-      if (input === '-') {
+      if (input === '-' && input !== staged) {
         this.commitInput(input);
       } else {
+        let previousCommit = inputs.pop();
+        if (previousCommit) {
+          if (OPERATORS.split('').indexOf(previousCommit) === -1) {
+            inputs.push(previousCommit);
+          }
+          this.setState({ inputs });
+        }
         this.commitInput(input, true);
       }
     } else {
